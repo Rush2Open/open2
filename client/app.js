@@ -1,5 +1,5 @@
 
-var app = angular.module('myApp', ['ngMaterial', 'ngRoute', 'ngMessages']);
+var app = angular.module('myApp', ['ngMaterial', 'ngRoute', 'ngMessages', 'ui.router']);
 app.config(function($mdThemingProvider) {
   $mdThemingProvider.definePalette('Open2Pallete', {
     '50': 'FFBC4F',
@@ -39,10 +39,19 @@ app.config(function($routeProvider) {
   })
 });
 
+//state config
+app.config(function($stateProvider){
+  $stateProvider
+      .state('userProfile', {
+        url: '/userProfile',
+        templateUrl: 'userProfile.html',
+        controller: 'userProfileCtrl'
+      })
+});
 
 /// login controller
 app.controller('loginCtrl', function($scope, Services, $location) {
-  
+
 
   $scope.redirectSignup = function() {
     $location.path('/signup');
@@ -57,7 +66,7 @@ app.controller('loginCtrl', function($scope, Services, $location) {
 
     //remember the current username to use later
   localStorage.setItem('username', $scope.username);
-   
+
    //login the user
   Services.login(user);
   };
@@ -137,7 +146,7 @@ app.controller('dashboardCtrl', function($scope, Services,$mdDialog, $mdMedia, $
 
 ////////////////end of uploading dashboard
 
- 
+
  // join or unjoin event
 
  $scope.join = function(id, status) {
@@ -152,7 +161,7 @@ app.controller('dashboardCtrl', function($scope, Services,$mdDialog, $mdMedia, $
   }
    //unjoin
   else if(status === 'unjoin') {
-  
+
   // delete the record about user's attendance from database
    Services.unjoinEvent(id); // this doesn't work for come reason.
   }
@@ -164,7 +173,7 @@ app.controller('dashboardCtrl', function($scope, Services,$mdDialog, $mdMedia, $
  .then(function(data){
     //console.log("friendslist i got from server ", data.data)
     $scope.friends = data.data;
-    
+
  });
 
 
@@ -190,12 +199,12 @@ app.controller('dashboardCtrl', function($scope, Services,$mdDialog, $mdMedia, $
   };
   //this the end of our pop up dialog box.
 
- 
+
   $scope.time = {
     value: new Date(2016, 3, 9)
   };  //end of our time selector
 
- 
+
   $scope.click = function() {
     var eventInfo = {
       'event' : $scope.user.activity,
@@ -203,7 +212,7 @@ app.controller('dashboardCtrl', function($scope, Services,$mdDialog, $mdMedia, $
       'username': localStorage.getItem('username')
     }
 
-     
+
     Services.eventsPost(eventInfo)
     .then(function(respData){
       //console.log('i got this back from server/database', respData);
@@ -214,6 +223,16 @@ app.controller('dashboardCtrl', function($scope, Services,$mdDialog, $mdMedia, $
 
 }); ///////// end of dahboard controller
 
+// profile controller
+app.controller('userProfileCtrl', function($scope, Services) {
+  $scope.submitImage = function() {
+    var image = {
+      url: $scope.imageURL,
+      type: $scope.imageType
+    };
+    Services.uploadImage(image);
+  };
+}); // end of profile controller
 
 
 /// this reversed the order of the events displayed on dashboard
@@ -222,8 +241,6 @@ app.filter('reverse', function() {
     return items.slice().reverse();
   };
 });
-
-
 
 
   /// factory for get/post requests
@@ -271,7 +288,7 @@ app.factory('Services', function($http, $location) {
     })
   };
 
-   // get the event info from database 
+   // get the event info from database
   var uploadDashboard = function() {
     return $http({
       method: 'GET',
@@ -300,7 +317,7 @@ app.factory('Services', function($http, $location) {
     })
   };
 
-     
+
      // new event request
   var eventsPost = function(eventInfo) {
     //console.log('eventinfo inside events post', eventInfo);
@@ -331,7 +348,7 @@ var joinEvent = function(eventId) {
 };
 
 
-   //remove the record of user from database// this isn't handled in the backend 
+   //remove the record of user from database// this isn't handled in the backend
 var unjoinEvent = function(userEventId) {
     return $http({
        method: 'POST',
@@ -339,6 +356,15 @@ var unjoinEvent = function(userEventId) {
        data: userEventId
     });
 
+};
+
+  //upload an Image to userProfile
+var uploadImage = function(image) {
+    return $http({
+       method: 'POST',
+       url: 'http://localhost:8080/userProfile/uploadImage',
+       data: image
+    });
 };
 
   return {
@@ -351,7 +377,8 @@ var unjoinEvent = function(userEventId) {
     username: username,
     uploadFriendslist: uploadFriendslist,
     joinEvent: joinEvent,
-    unjoinEvent: unjoinEvent
+    unjoinEvent: unjoinEvent,
+    uploadImage: uploadImage
   };
 
 });
