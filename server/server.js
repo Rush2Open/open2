@@ -1,4 +1,4 @@
-var express = require('express');
+ var express = require('express');
 var bodyParser = require('body-parser');
 var db = require('./db.js');
 var cors = require('cors');
@@ -12,6 +12,7 @@ app.use(cors());
 var index = require('./index');
 var signup = require('./signup');
 var dashboard = require('./dashboard');
+var friends = require('./friends.js');
 
 app.use(bodyParser());
 app.use(bodyParser.json());
@@ -21,6 +22,7 @@ app.use(express.static(__dirname + '/../client'));
 app.use('/index', index);
 app.use('/signup', signup);
 app.use('/dashboard', dashboard);
+app.use('/friends', friends);
 
 var host = process.env.PORT || 8080;
 

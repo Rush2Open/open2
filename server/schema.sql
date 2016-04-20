@@ -21,3 +21,14 @@ CREATE TABLE IF NOT EXISTS `UserEvents` (
 	FOREIGN KEY(`user_id`) REFERENCES Users(`id`),
 	FOREIGN KEY(`event_id`) REFERENCES Events(`id`)
 );
+
+CREATE TABLE IF NOT EXISTS `Friends` (
+	`id` INTEGER NOT NULL AUTO_INCREMENT,
+	`user_id1` INTEGER NOT NULL,
+	`user_id2` INTEGER NOT NULL,
+	`status` INTEGER,
+	PRIMARY KEY(`id`),
+	FOREIGN KEY(`user_id1`) REFERENCES Users(`id`),
+	FOREIGN KEY(`user_id2`) REFERENCES Users(`id`)
+
+ );

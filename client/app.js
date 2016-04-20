@@ -69,6 +69,7 @@ angular.module('myApp', [
   };
 })
 
+
 // controller handles styling
 .controller('AppCtrl', function ($scope, $timeout, Services, $mdSidenav, $log) {
   $scope.toggleLeft = buildDelayedToggler('left');

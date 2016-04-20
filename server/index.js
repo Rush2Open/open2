@@ -5,6 +5,11 @@ var bodyParser = require('body-parser');
 var router = express.Router();
 var bcrypt = require('bcrypt-nodejs');
 
+var firebaseTokenGenerator = require('firebase-token-generator');
+
+var tokenGenerator = new firebaseTokenGenerator("yxjLqiN5zDX3L0OjncQs88LLuTRP5DkVPCM0wj68");
+
+
 var app = express();
 app.use(cors());
 
@@ -12,11 +17,12 @@ app.use(cors());
 router.post('/homepage', function(request, response){
   var username = request.body.username;
   var password = request.body.password;
+  var hash = bcrypt.hashSync(password);
 
 
   db.query('SELECT * FROM Users WHERE `username` = ?;', [username], function(err, rows) {
+
     console.log("This is our password in our db", rows[0].password)
-    var hash = bcrypt.hashSync(password);
 
     console.log("This is the bcrypt pass true/false",bcrypt.compareSync( password ,rows[0].password ))
 
@@ -26,7 +32,21 @@ router.post('/homepage', function(request, response){
       if(!bcrypt.compareSync( password ,rows[0].password )){
         console.log("Incorrect password");
       }else{
-        response.send('/dashboard');
+        console.log("passes first query");
+        db.query('SELECT id FROM Users WHERE `username` =?;', [username], function(err, rows) {
+        if (err){
+          console.log("error in query");
+        } else {
+          var stringUID = rows[0].id.toString();
+        // console.log("this is the token", token);
+        var token = tokenGenerator.createToken({ uid: stringUID, some: "arbitrary", data: "here" });
+        console.log("SUPER SUCCESS", token);
+        response.send({token: token});
+        }
+
+        })
+
+      
       }
     }
   })

@@ -77,16 +77,7 @@ router.get('/upload', function(request, response){
 
 })
 
-router.get('/friends', function(request, response){
-  db.query('SELECT username FROM Users', function(err, results){
-    if(err){
-      throw err;
-    }else{
-      console.log("friends list from db", results);
-      response.send(results);
-    }
-  })
-})
+
 
 router.post('/join', function(request, response){
   var username = request.body.user;
