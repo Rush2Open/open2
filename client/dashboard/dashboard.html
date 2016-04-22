@@ -1,52 +1,14 @@
 <!--- nav bar start -->
 <div class = "bodyColor2">
-<div ng-controller="AppCtrl" layout="column" style="height:70px;" ng-cloak>
-  <md-toolbar>
-    <div class="md-toolbar-tools">
-
-      <h1 style="font-size: 30px; font-weight: bold;" class = "open" ng-click="toggleLeft()">Profile</h2>
-      <span flex></span>
-
-      <md-button class="md-warn md-raised md-hue-2" ng-click="authObj.$unauth()">logout</md-button>
-
-
-     </div>
-   </md-toolbar>
-</div>
-<!-- nav bar end -->
-
-<!-- userProfile -->
-<section layout="row" flex>
-  <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-disable-backdrop md-whiteframe="4">
-  <md-toolbar class="md-theme-indigo" ng-controller="LeftCtrl">
-     <h3 class='open' ng-click="close()">{{info[0].username}}</h3>
-  </md-toolbar>
-
-  <br>
-    <img class="profilePic" src='../assets/default.jpg' alt='Profile Picture'>
-  <br>
-  <md-toolbar class="md-theme-indigo" ng-controller="LeftCtrl">
-     <h3 class= "open">Friends</h3>
-      <md-button class="md-fab" id='searchFriends' aria-label="Eat cake" ng-click="showSearchBar()">
-      <md-icon md-svg-src="../assets/search.svg"></md-icon>
-      </md-button>
-      <span ng-show="searchBarShown">
-        <span><input type="text" ng-model='userNameYouWant'></input><span>
-        <div  ng-repeat="name in userList | filter:userNameYouWant">
-        <span id='userResult'>{{name.username}}</span>
-        <span><md-button class="md-warn md-raised md-hue-2">Add Friend</md-button><span>
+  <div ng-controller="AppCtrl" layout="column" style="height:70px;" ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h1 style="font-size: 30px; font-weight: bold;" class = "open" ng-click="toggleLeft()">Profile</h2>
+          <span flex></span>
+          <h1 style="font-size: 30px; font-weight: bold;" class = "open" ng-click="toggleLeft()"> Open2</h1>
+          <md-button class="md-warn md-raised md-hue-2" ng-click="authObj.$unauth()">logout</md-button>
         </div>
-      </span>
-  </md-toolbar>
-  <md-content layout-padding ng-controller="LeftCtrl">
-    <ul ng-controller = 'dashboardCtrl' >
-    <div ng-repeat = 'friend in friends'>
-  </md-card-title-media>
-  <md-card-title-text>
-    <img src="http://portal.stickntrack.com/images/profile.jpg" alt="Mountain View" style="width:50px;height:50px;"><span class="md-headline font">{{friend.username}}</span>
-  </md-card-title-text>
-  </md-card-title>
-    </md-card>
+      </md-toolbar>
     </div>
     <!-- nav bar end -->
 
@@ -61,77 +23,82 @@
         <br>
         <md-toolbar class="md-theme-indigo" ng-controller="LeftCtrl">
           <h3 class= "open">Friends</h3>
+          <md-button class="md-fab" id='searchFriends' aria-label="Eat cake" ng-click="showSearchBar()">
+            <md-icon md-svg-src="../assets/search.svg"></md-icon>
+          </md-button>
+          <span ng-show="searchBarShown">
+            <span><input type="text" ng-model='userNameYouWant'></input></span>
+            <div ng-repeat="name in userList | filter:userNameYouWant">
+              <span id='userResult'>{{name.username}}</span>
+              <span><md-button class="md-warn md-raised md-hue-2">Add Friend</md-button></span>
+            </div>
+          </span>
         </md-toolbar>
         <md-content layout-padding ng-controller="LeftCtrl">
           <ul ng-controller = 'dashboardCtrl' >
             <div ng-repeat = 'friend in friends'>
-            </md-card-title-media>
-            <md-card-title-text>
-              <img src="http://portal.stickntrack.com/images/profile.jpg" alt="Mountain View" style="width:50px;height:50px;"><span class="md-headline font">{{friend.username}}</span>
-            </md-card-title-text>
-          </md-card-title>
-        </md-card>
-      </div>
-    </ul>
-  </md-content>
-</md-sidenav>
-
-
-<md-content flex layout-padding>
-  <div layout="column" layout-fill layout-align="top center">
-    <div>
-      <h1>Chatroom header</h1>
-    </div>
-    <div>
-      <label>Message:</label>
-      <input ng-model="msg" ng-keydown="" type="text" id="messageInput"  placeholder="Type a message...">
-    </div>
-    <div>
-      <p>Messages will populate here</p>
-    </div>
-  </div>
-  <!-- notification Box -->
-  <div id = 'eventContainer' ng-controller="SubheaderAppCtrl" layout="column" flex layout-fill ng-cloak>
-    <md-toolbar>
-      <div class="md-toolbar-tools open" style="font-size: 30px;">Hangouts</div>
-      <md-button class="md-primary md-raised" ng-click="showAdvanced($event)" flex class="md-warn"> new event</md-button>
-    </md-toolbar>
-    <md-content md-theme="altTheme">
-
-      <div ng-controller='dashboardCtrl'>
-        <div ng-if='events.fetch'>
-
-          <ul flex id = 'eventsList' class = 'font'>
-            <h4 class = 'open'>Available</h4>
-            <li ng-repeat="event in events.list | reverse" style = "list-style: none">
-              <span style = "font-weight: bold" class = 'font' > {{event.username}} wants to {{ event.eventname}} </span>
-              <span> {{event.timestamp.slice(11, 19)}}</span>
-
-              <md-button   ng-click="join(event.id, event.status)" class="md-warn md-raised md-hue-2" class = 'font'> {{event.status}} </md-button>
-            </li>
-
+              <md-card-title-text>
+                <img src="http://portal.stickntrack.com/images/profile.jpg" alt="Mountain View" style="width:50px;height:50px;"><span class="md-headline font">{{friend.username}}</span>
+              </md-card-title-text>
+            </div>
           </ul>
+        </md-content>
+      </md-sidenav>
 
-          <ul flex id = 'eventsIgoTo'>
-            <h4 class = 'open'>Attending</h4>
-            <li ng-repeat="event in events.eventsIgoTo | reverse" style = "list-style: none">
-              <span style = "font-weight: bold" class = 'font' > I want to {{ event.eventname}} </span>
-              <span> {{event.timestamp.slice(11, 19)}}  </span>
+      <md-content flex layout-padding>
+        <div layout="column" layout-fill layout-align="top center">
 
-              <md-button   ng-click="join(event.id, event.status)" class="md-warn md-raised md-hue-2 font"> {{event.status}}</md-button>
-            </li>
-
-          </ul>
-
+          <!-- button start -->
+          <div ng-controller="dashboardCtrl" class="md-padding" id="popupContainer" ng-cloak>
+            <div>
+              <h1>Chatroom header</h1>
+            </div>
+            <div>
+              <label>Message:</label>
+              <input ng-model="msg" ng-keydown="newMessage($event)" type="text" id="messageInput"  placeholder="Type a message...">
+            </div>
+            <div>
+              <p>Messages will populate here</p>
+              <ul>
+                <li ng-repeat="msg in messages">
+                  <strong>{{msg.from}}: </strong>{{msg.body}}
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </div>
-    </md-content>
-  </div>
-  <!-- Notification END -->
 
-</div>
-
-</md-content>
-
-</section>
+        <!-- notification Box -->
+        <div id = 'eventContainer' ng-controller="SubheaderAppCtrl" layout="column" flex layout-fill ng-cloak>
+          <md-toolbar>
+            <div class="md-toolbar-tools open" style="font-size: 30px;">Hangouts</div>
+            <md-button class="md-primary md-raised" ng-click="showAdvanced($event)" flex class="md-warn"> new event</md-button>
+          </md-toolbar>
+          <md-content md-theme="altTheme">
+            <div ng-controller='dashboardCtrl'>
+              <div ng-if='events.fetch'>
+                <ul flex id = 'eventsList' class = 'font'>
+                  <h4 class = 'open'>Available</h4>
+                  <li ng-repeat="event in events.list | reverse" style = "list-style: none">
+                    <span style = "font-weight: bold" class = 'font' > {{event.username}} wants to {{ event.eventname}} </span>
+                    <span> {{event.timestamp.slice(11, 19)}}</span>
+                    <md-button ng-click="join(event.id, event.status)" class="md-warn md-raised md-hue-2" class = 'font'> {{event.status}} </md-button>
+                  </li>
+                </ul>
+                <ul flex id = 'eventsIgoTo'>
+                  <h4 class = 'open'>Attending</h4>
+                  <li ng-repeat="event in events.eventsIgoTo | reverse" style = "list-style: none">
+                    <span style = "font-weight: bold" class = 'font' > I want to {{ event.eventname}} </span>
+                    <span> {{event.timestamp.slice(11, 19)}}  </span>
+                    <md-button   ng-click="join(event.id, event.status)" class="md-warn md-raised md-hue-2 font"> {{event.status}}</md-button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </md-content>
+        </div>
+        <!-- Notification END -->
+      </section>
+    </div>
+  </md-content>
 </div>
