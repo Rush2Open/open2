@@ -6,7 +6,8 @@ angular.module('myApp', [
   'dashboard-module',
   'open2-Services',
   'ui.router',
-  'firebase'
+  'firebase',
+  'naif.base64'
 ])
 
 //route config

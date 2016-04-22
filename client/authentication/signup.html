@@ -9,6 +9,11 @@
     <md-input-container md-no-float="" class="md-block">
     <input type="password" name="password"ng-model="password" placeholder="Password">
     </md-input-container>
+    <md-input-container md-no-float="" class="md-block">
+    <h5 class='open'>Your Avatar!</h5>
+    <p>Accepted Files: .jpg</p>
+    <input type="file" name="pic" ng-model="pic" aria-label='profilePic' accept="image/*" base-sixty-four-input>
+    </md-input-container>
     <md-button class="md-warn md-raised md-hue-2"  ng-click="submit()" aria-label="Eat cake"> Sign Up!
     </md-button>
     </form>

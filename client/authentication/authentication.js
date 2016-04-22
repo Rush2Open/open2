@@ -1,4 +1,4 @@
-angular.module('authentication-module', ['firebase'])
+angular.module('authentication-module', ['firebase', 'naif.base64'])
   .controller('loginCtrl', function($scope, Services, $state, $firebaseAuth) {
       $scope.ref = new Firebase("https://fiery-inferno-8987.firebaseio.com");
       $scope.authObj = $firebaseAuth($scope.ref);
@@ -35,11 +35,12 @@ angular.module('authentication-module', ['firebase'])
       };
   })
   .controller('signupCtrl', function($scope, Services, $state) {
-
+      console.log('base64: ',$scope.pic);
       $scope.submit = function() {
         var user = {
           username: $scope.username,
-          password: $scope.password
+          password: $scope.password,
+          pic: $scope.pic.base64
         };
         Services.signup(user)
         .then(function(resp){

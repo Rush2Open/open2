@@ -16,11 +16,13 @@ router.post('/newuser', function(request, response){
 
   var username = request.body.username;
   var password = request.body.password;
+  var picture = request.body.pic;
+  console.log('picture: ',picture);
   var hashedPass = bcrypt.hashSync(password, 10);
 
-  users = {username: username, password: hashedPass};
+  var user = {username: username, password: hashedPass, picture: picture};
 
-  db.query('INSERT INTO Users SET ?', users, function(err, results){
+  db.query('INSERT INTO Users SET ?', user, function(err, results){
     if(err){
       response.sendStatus(500);
     }else{

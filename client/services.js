@@ -23,6 +23,7 @@ angular.module('open2-Services',[])
   // signup
 
   var signup = function(user) {
+    console.log(user);
     return $http({
       method: 'POST',
       url: 'http://localhost:8080/signup/newuser',

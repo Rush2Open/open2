@@ -14,7 +14,7 @@ angular.module('dashboard-module', ['firebase'])
 
         Services.uploadUserProfile($scope.uid)
         .then(function(data){
-          console.log("yes its working")
+          console.log('data: ', data.data);
           $scope.info = data.data;
 
 

@@ -19,7 +19,9 @@
           <h3 class='open' ng-click="close()">{{info[0].username}}</h3>
         </md-toolbar>
         <br>
-        <img class="profilePic" src='../assets/default.jpg' alt='Profile Picture'>
+       <div ng-if="info[0].picture">
+       <img class='picture' ng-src="data:image/jpeg;base64,{{info[0].picture}}">
+       </div>
         <br>
         <md-toolbar class="md-theme-indigo" ng-controller="LeftCtrl">
           <h3>Your Friends</h3>
